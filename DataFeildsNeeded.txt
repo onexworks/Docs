@@ -1,0 +1,66 @@
+| merged_snapshot_quote_data.tr_date  | merged_snapshot_quote_data.tr_time  | merged_snapshot_quote_data.bid_price  | merged_snapshot_quote_data.bid_size  | merged_snapshot_quote_data.ask_price  | merged_snapshot_quote_data.ask_size  | merged_snapshot_quote_data.market_flag  | merged_snapshot_quote_data.quote_condition  | merged_snapshot_quote_data.contract_commodity  | merged_snapshot_quote_data.contract_month  | merged_snapshot_quote_data.contract_year  | merged_snapshot_quote_data.contract_expiry_date  | merged_snapshot_quote_data.symbol  | merged_snapshot_quote_data.tr_year  | merged_snapshot_quote_data.tr_month  |
++-------------------------------------+-------------------------------------+---------------------------------------+--------------------------------------+---------------------------------------+--------------------------------------+-----------------------------------------+---------------------------------------------+------------------------------------------------+--------------------------------------------+-------------------------------------------+--------------------------------------------------+------------------------------------+-------------------------------------+--------------------------------------+--+
+| 2010-05-28                          | 2010-05-28 10:55:06.27              | 90.7                                  | 3                                    | 97.55                                 | 1                                    | E                                       |                                             | Nymex_WTI                                      | 12                                         | 2017                                      | NULL                                             | CL                                 | 2010                                | 5                                    |
+| 2010-05-28                          | 2010-05-28 10:55:06.27              | 90.7                                  | 3                                    | 97.55                                 | 1                                    | E                                       |                                             | Nymex_WTI                                      | 12                                         | 2017                                      | NULL                                             | CL                                 | 2010                                | 5                                    |
+| 2010-05-28                          | 2010-05-28 10:55:06.27              | 90.7                                  | 3                                    | 92.17                                 | 1                                    | E                                       |                                             | Nymex_WTI                                      | 12                                         | 2017                                      | NULL                                             | CL                                 | 2010                                | 5                                    |
+| 2010-05-28                          | 2010-05-28 10:55:06.414             | 90.7                                  | 3                                    | 92.14                                 | 1                                    | E                                       |                                             | Nymex_WTI                                      | 12                                         | 2017                                      | NULL                                             | CL                                 | 2010                                | 5                                    |
+| 2010-05-28                          | 2010-05-28 10:55:06.578             | 90.7                                  | 3                                    | 97.55                                 | 1                                    | E                                       |                                             | Nymex_WTI                                      | 12                                         | 2017                                      | NULL                                             | CL                                 | 2010                                | 5                                    |
+| 2010-05-28                          | 2010-05-28 10:55:06.578             | 90.7                                  | 3                                    | 97.55                                 | 1                                    | E                                       |                                             | Nymex_WTI                                      | 12                                         | 2017                                      | NULL                                             | CL                                 | 2010                                | 5                                    |
+| 2010-05-28                          | 2010-05-28 10:55:06.578             | 90.7                                  | 3                                    | 92.16                                 | 1                                    | E                                       |                                             | Nymex_WTI                                      | 12                                         | 2017                                      | NULL                                             | CL                                 | 2010                                | 5                                    |
+| 2010-05-28                          | 2010-05-28 10:55:06.611             | 90.7                                  | 3                                    | 97.55                                 | 1                                    | E                                       |                                             | Nymex_WTI                                      | 12                                         | 2017                                      | NULL                                             | CL                                 | 2010                                | 5                                    |
+| 2010-05-28                          | 2010-05-28 10:55:06.611             | 90.7                                  | 3                                    | 97.55                                 | 1                                    | E                                       |                                             | Nymex_WTI                                      | 12                                         | 2017                                      | NULL                                             | CL                                 | 2010                                | 5                                    |
+| 2010-05-28                          | 2010-05-28 10:55:06.611             | 90.7                                  | 3                                    | 92.18                                 | 1                                    | E                                       |                                             | Nymex_WTI                                      | 12                                         | 2017                                      | NULL                                             | CL                                 | 2010                                | 5                                    |
++-------------------------------------+-------------------------------------+---------------------------------------+--------------------------------------+---------------------------------------+--------------------------------------+-----------------------------------------+---------------------------------------------+------------------------------------------------+--------------------------------------------+-------------------------------------------+--------------------------------------------------+------------------------------------+-------------------------------------+--------------------------------------+--+
+
+
+
+hive -e 'SELECT * FROM dft_trading.merged_quote_data WHERE contract_year IN (2017,2018);' | sed 's/[\t]/,/g'  > /home/yourfile.csv
+
+
+
+
+
+INSERT OVERWRITE LOCAL DIRECTORY '/user/rpolish/nifi_source/' 
+ROW FORMAT DELIMITED 
+FIELDS TERMINATED BY ','  
+LINES TERMINATED BY "\n"
+SELECT * FROM dft_trading.merged_snapshot_quote_data where merged_snapshot_quote_data.tr_date >= '2017-01-01';
+
+
+tr_date,tr_time,bid_price,bid_size,ask_price,ask_size,market_flag,quote_condition,contract_commodity,contract_month,contract_year,contract_expiry_date,symbol,tr_year,tr_month
+2010-05-28,2010-05-28T10:55:06.27Z,90.7,3,97.55,1,E, ,Nymex_WTI,12,2017,NULL,CL,2010,5
+2010-05-28,2010-05-28T10:55:06.414Z,90.7,3,92.14,1,E, ,Nymex_WTI,12,2017,NULL,CL,2010,5
+
+
+AdviseDemo Java
+
+KnownFields.PriceSymbol, 
+KnownFields.TradeDateTimeUtc, 
+KnownFields.Open, 
+KnownFields.Close, 
+KnownFields.MostRecentValue, 
+KnownFields.Volume, 
+KnownFields.Bid, 
+KnownFields.Ask, 
+KnownFields.BidSize, 
+KnownFields.AskSize, 
+KnownFields.OpenInterest
+
+DailyDemo
+
+KnownFields.PriceSymbol, 
+KnownFields.TradeDateTimeUtc, 
+KnownFields.Open, 
+KnownFields.Close, 
+KnownFields.MostRecentValue
+
+Feilds for Trade:
+
+Transaction_date
+Transaction_Time
+
+
+Feilds for Quotes:
+
+
+
